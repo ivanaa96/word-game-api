@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Service\WordPoints;
+namespace App\Domain\Service\WordPoints;
 
-use App\Models\Word;
+use App\Domain\Models\Word;
 
 class CalculateWordPoints
 {
@@ -16,7 +16,7 @@ class CalculateWordPoints
 
       $allPoints = 0;
       foreach ($rules as $rule) {
-         $allPoints += $rule->getPoints($word->getWord());
+         $allPoints += $rule->getPoints($word);
       }
 
       return $allPoints;

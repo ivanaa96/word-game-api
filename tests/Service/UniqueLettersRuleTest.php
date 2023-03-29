@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Tests\WordController;
+namespace App\Tests\Service;
 
-use App\Service\WordPoints\UniqueLettersRule;
+use App\Domain\Models\Word;
+use App\Domain\Service\WordPoints\UniqueLettersRule;
 use PHPUnit\Framework\TestCase;
 
 class UniqueLettersRuleTest extends TestCase
@@ -16,6 +17,6 @@ class UniqueLettersRuleTest extends TestCase
 
    public function test_should_give_points_for_unique_letters()
    {
-      $this->assertEquals(3, $this->instance->getPoints('level'));
+      $this->assertEquals(3, $this->instance->getPoints(new Word('level')));
    }
 }

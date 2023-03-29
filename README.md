@@ -18,3 +18,10 @@ And start the server:
 symfony server:start
 ```
 ````
+
+if you get an error "call to undefined method pspell_check", do this:
+```
+sudo apt install aspell
+sudo apt install php8.1-pspell
+sudo apt install aspell-en
+```

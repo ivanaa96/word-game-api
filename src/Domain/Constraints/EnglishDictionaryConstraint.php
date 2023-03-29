@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Constraints;
+namespace App\Domain\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraint;
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 class EnglishDictionaryConstraint extends Constraint
 {
-   public $invalidWord = 'This word does not exist in english dictionary.';
+   public string $invalidWord = 'This word does not exist in english dictionary.';
 
    public function validatedBy(): string
    {
