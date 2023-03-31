@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Domain\Dictionary\NotEnglishWordException;
+use App\Domain\Word\NotAWordException;
+use App\Domain\Word\WordContainsSymbolException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,20 +13,24 @@ use App\Application\Points;
 
 class WordController extends AbstractController
 {
-   public function __construct(
-      protected Points $calculatePoints,
-   ) {
-   }
+    public function __construct(
+        protected Points $calculatePoints,
+    ) {
+    }
 
-   #[Route('/word/points', name: 'word-points')]
-   public function getWordPoints(Request $request): JsonResponse
-   {
-       try {
-           return $this->json([
-               'points' => $this->calculatePoints->getPointsForWord($request->query->get('word', '')),
-           ]);
-       } catch(\InvalidArgumentException $e) {
-           return $this->json(['error' => $e->getMessage()], 400);
-       }
-   }
+    /**
+     * @throws NotAWordException
+     * @throws WordContainsSymbolException
+     * @throws NotEnglishWordException
+     */
+    #[Route('/word/points', name: 'word-points')]
+    public function getWordPoints(Request $request): JsonResponse
+    {
+        $word = $request->query->get('word', '');
+        $points = $this->calculatePoints->getPointsForWord($word);
+
+        return $this->json([
+            'points' => $points
+        ]);
+    }
 }

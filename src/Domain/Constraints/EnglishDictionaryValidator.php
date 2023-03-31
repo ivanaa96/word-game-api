@@ -1,10 +1,10 @@
-<?php // src/AppBundle/Validator/Constraint/HasValidDimensionsValidator.php
+<?php
 
 namespace App\Domain\Constraints;
 
+use App\Domain\Dictionary\DictionaryInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use App\Domain\Models\Dictionary;
 
 /**
  * @Annotation
@@ -12,14 +12,16 @@ use App\Domain\Models\Dictionary;
 class EnglishDictionaryValidator extends ConstraintValidator
 {
     public function __construct(
-        protected Dictionary $dictionary,
+        protected DictionaryInterface $dictionary,
     ) {
-    }   public function validate($value, Constraint $constraint): void
-   {
-      if (!is_null($value) && !$this->dictionary->isInEnglishDictionary($value)) {
-         $this->context
-            ->buildViolation($constraint->invalidWord)
-            ->addViolation();
-      }
-   }
+    }
+
+    public function validate(mixed $value, Constraint $constraint): void
+    {
+        if (!is_null($value) && !$this->dictionary->isInDictionary($value)) {
+            $this->context
+                ->buildViolation($constraint->invalidWord)
+                ->addViolation();
+        }
+    }
 }
