@@ -2,7 +2,7 @@
 
 namespace App\Domain\Word;
 
-use App\Domain\Constraints\EnglishDictionaryConstraint;
+use App\Domain\Dictionary\Constraints\EnglishDictionaryConstraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class Word
@@ -16,16 +16,6 @@ class Word
     public function __construct(string $word)
     {
         $this->word = $word;
-    }
-
-    public function getWord(): string
-    {
-        return $this->word;
-    }
-
-    public function isPalindrome(): bool
-    {
-        return $this->compareAreWordsPalindrome($this->getWord());
     }
 
     public function isAlmostPalindrome(): bool
@@ -43,14 +33,29 @@ class Word
         return false;
     }
 
+    public function isPalindrome(): bool
+    {
+        return $this->compareAreWordsPalindrome($this->getWord());
+    }
+
+    public function getUniqueLetters(): array
+    {
+        return array_unique(str_split($this->word));
+    }
+
+    public function getWord(): string
+    {
+        return $this->word;
+    }
+
     public function __toString(): string
     {
         return $this->getWord();
     }
 
-    public function equalsTo(string $word): bool
+    public function equalsTo(Word $value): bool
     {
-        return $this->getWord() === $word;
+        return $this->getWord() === $value->getWord();
     }
 
     private function compareAreWordsPalindrome(string $comparedWord): bool

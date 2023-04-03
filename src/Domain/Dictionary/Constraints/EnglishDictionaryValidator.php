@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Constraints;
+namespace App\Domain\Dictionary\Constraints;
 
-use App\Domain\Dictionary\DictionaryInterface;
+use App\Domain\Dictionary\Dictionary;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -12,7 +12,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class EnglishDictionaryValidator extends ConstraintValidator
 {
     public function __construct(
-        protected DictionaryInterface $dictionary,
+        protected Dictionary $dictionary,
     ) {
     }
 

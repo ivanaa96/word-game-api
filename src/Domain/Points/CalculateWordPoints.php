@@ -6,16 +6,19 @@ use App\Domain\Word\Word;
 
 class CalculateWordPoints
 {
+    /**
+     * @param WordPointRule[] $rules
+     */
+    public function __construct(
+        private iterable $rules
+    )
+    {
+    }
+
     public function calculate(Word $word): int
     {
-        $rules = [
-            new UniqueLettersRule(),
-            new PalindromeRule(),
-            new IsAlmostPalindromeRule(),
-        ];
-
         $allPoints = 0;
-        foreach ($rules as $rule) {
+        foreach ($this->rules as $rule) {
             $allPoints += $rule->getPoints($word);
         }
 

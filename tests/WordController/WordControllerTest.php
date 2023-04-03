@@ -9,9 +9,12 @@ class WordControllerTest extends WebTestCase
 {
     protected KernelBrowser $client;
 
-    protected function setUp(): void
+    public function test_that_api_is_going_to_reject_if_word_is_null(): void
     {
-        $this->client = static::createClient();
+        $this->client->request('GET', '/word/points');
+
+        $this->assertResponseStatusCodeSame(422);
+        $this->assertEquals("The given value is not a word!", $this->getJson()['error']);
     }
 
     private function getJson()
@@ -20,19 +23,11 @@ class WordControllerTest extends WebTestCase
         return json_decode($response->getContent(), true);
     }
 
-    public function test_that_api_is_going_to_reject_if_word_is_null(): void
-    {
-        $this->client->request('GET', '/word/points');
-
-        $this->assertResponseStatusCodeSame(500);
-        $this->assertEquals("The given value is not a word!", $this->getJson()['error']);
-    }
-
     public function test_should_fail_if_word_isnt_in_en_dict(): void
     {
         $this->client->request('GET', '/word/points?word=stolica');
 
-        $this->assertResponseStatusCodeSame(500);
+        $this->assertResponseStatusCodeSame(422);
         $this->assertEquals("Given word is not in the english dictionary!", $this->getJson()['error']);
     }
 
@@ -58,5 +53,10 @@ class WordControllerTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertEquals(6, $this->getJson()['points']);
+    }
+
+    protected function setUp(): void
+    {
+        $this->client = static::createClient();
     }
 }

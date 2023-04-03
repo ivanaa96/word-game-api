@@ -36,7 +36,10 @@ class WordModelTest extends TestCase
     public function testEqualsTo()
     {
         $word = new Word('hello');
-        $this->assertTrue($word->equalsTo('hello'));
-        $this->assertFalse($word->equalsTo('world'));
+        $wordTwo = new Word('hello');
+        $wordThree = new Word('world');
+
+        $this->assertTrue($word->equalsTo($wordTwo));
+        $this->assertFalse($word->equalsTo($wordThree));
     }
 }

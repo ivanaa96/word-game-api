@@ -2,10 +2,7 @@
 
 namespace App\Domain\Dictionary;
 
-class Dictionary implements DictionaryInterface
+interface Dictionary
 {
-    public function isInDictionary(string $word): bool
-    {
-        return pspell_check(pspell_new("en"), $word);
-    }
+    public function isInDictionary(string $word): bool;
 }

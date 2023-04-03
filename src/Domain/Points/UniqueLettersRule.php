@@ -8,8 +8,6 @@ class UniqueLettersRule implements WordPointRule
 {
     public function getPoints(Word $word): int
     {
-        $uniqueLetters = array_unique(str_split($word));
-
-        return count($uniqueLetters);
+        return count($word->getUniqueLetters());
     }
 }

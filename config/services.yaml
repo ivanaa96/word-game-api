@@ -20,9 +20,26 @@ services:
       - '../src/Entity/'
       - '../src/Kernel.php'
 
-  App\Domain\Dictionary\DictionaryInterface:
-    alias: App\Domain\Dictionary\Dictionary
+  App\Domain\Dictionary\Dictionary:
+    alias: App\Domain\Dictionary\EnglishPspellDictionary
     public: true
+
+  App\Domain\Base\ExceptionListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.exception }
+
+  App\Domain\Points\PalindromeRule:
+    tags: [ 'rules' ]
+
+  App\Domain\Points\IsAlmostPalindromeRule:
+    tags: [ 'rules' ]
+
+  App\Domain\Points\UniqueLettersRule:
+    tags: [ 'rules' ]
+
+  App\Domain\Points\CalculateWordPoints:
+    arguments:
+      - !tagged_iterator rules
 
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones

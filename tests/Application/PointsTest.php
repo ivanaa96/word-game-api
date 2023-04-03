@@ -3,7 +3,7 @@
 namespace App\Tests\Application;
 
 use App\Application\Points;
-use App\Domain\Dictionary\DictionaryInterface;
+use App\Domain\Dictionary\Dictionary;
 use App\Domain\Dictionary\NotEnglishWordException;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -18,10 +18,10 @@ class PointsTest extends KernelTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->mockDictionary = $this->getMockBuilder(DictionaryInterface::class)
+        $this->mockDictionary = $this->getMockBuilder(Dictionary::class)
             ->getMock();
         $this->container = static::getContainer();
-        $this->container->set(DictionaryInterface::class, $this->mockDictionary);
+        $this->container->set(Dictionary::class, $this->mockDictionary);
     }
 
     public function testGetPointsShouldRejectRequestIfWordIsNotInADictionary()
